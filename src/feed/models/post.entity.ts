@@ -1,7 +1,9 @@
+import { UserEntity } from 'src/auth/models/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
   CreateDateColumn,
 } from 'typeorm';
 
@@ -15,4 +17,7 @@ export class FeedPostEntity {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @ManyToOne(() => UserEntity, (userEntity) => userEntity.feedPosts)
+  author: UserEntity;
 }

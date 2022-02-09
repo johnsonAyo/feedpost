@@ -13,6 +13,11 @@ lerna-debug.log*
 
 # OS
 .DS_Store
+.env
+.eslintrc.js
+.prettierrc
+package-lock.json
+tsconfig.build.json
 
 # Tests
 /coverage
