@@ -8,8 +8,6 @@ import {
   Request,
   Delete,
   UseGuards,
-  HttpException,
-  HttpStatus,
 } from "@nestjs/common";
 import { JwtGuard } from "../../auth/guards/jwt.guard";
 import { Observable } from "rxjs";
@@ -37,7 +35,6 @@ export class FeedController {
     const id = parseInt(postStringId);
     return this.feedService.findPostById(id);
   }
-
 
 
   @Put(":id")
