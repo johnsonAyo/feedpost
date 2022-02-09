@@ -17,7 +17,6 @@ lerna-debug.log*
 .eslintrc.js
 .prettierrc
 package-lock.json
-tsconfig.build.json
 
 # Tests
 /coverage

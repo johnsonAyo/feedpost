@@ -1,4 +1,4 @@
-import { FeedPost } from 'src/feed/models/post.interface';
+import { FeedPost } from "src/feed/models/post.interface";
 
 export interface User {
   id?: number;

@@ -1,18 +1,18 @@
-import { UserEntity } from 'src/auth/models/user.entity';
+import { UserEntity } from "src/auth/models/user.entity";
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
   CreateDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity('feed_post')
+@Entity("feed_post")
 export class FeedPostEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: '' })
+  @Column({ default: "" })
   body: string;
 
   @CreateDateColumn()

@@ -1,7 +1,7 @@
-import { FeedPostEntity } from 'src/feed/models/post.entity';
-import { Entity, OneToMany, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { FeedPostEntity } from "src/feed/models/post.entity";
+import { Entity, OneToMany, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity('user')
+@Entity("user")
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;

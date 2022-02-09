@@ -1,18 +1,18 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { User } from '../models/user.interface';
-import { AuthService } from '../services/auth.service';
+import { Body, Controller, Post } from "@nestjs/common";
+import { map } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { User } from "../models/user.interface";
+import { AuthService } from "../services/auth.service";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('register')
+  @Post("register")
   register(@Body() user: User): Observable<User> {
     return this.authService.registerAccount(user);
   }
-  @Post('login')
+  @Post("login")
   login(@Body() user: User): Observable<{ token: string }> {
     return this.authService
       .login(user)

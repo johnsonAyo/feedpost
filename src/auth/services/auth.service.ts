@@ -1,20 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { InjectRepository } from "@nestjs/typeorm";
 
-import * as bcrypt from 'bcrypt';
-import { from, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { Repository } from 'typeorm';
-import { UserEntity } from '../models/user.entity';
-import { User } from '../models/user.interface';
+import * as bcrypt from "bcrypt";
+import { from, Observable } from "rxjs";
+import { map, switchMap } from "rxjs/operators";
+import { Repository } from "typeorm";
+import { UserEntity } from "../models/user.entity";
+import { User } from "../models/user.interface";
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
   hashPassword(password: string): Observable<string> {
     return from(bcrypt.hash(password, 12));
@@ -33,16 +33,16 @@ export class AuthService {
                 lastName,
                 email,
                 password: hashedPassword,
-              }),
+              })
             ).pipe(
               map((user: User) => {
                 delete user.password;
                 return user;
-              }),
+              })
             );
-          }),
+          })
         );
-      }),
+      })
     );
   }
 
@@ -51,9 +51,9 @@ export class AuthService {
       this.userRepository.findOne(
         { email },
         {
-          select: ['id', 'firstName', 'lastName', 'email', 'password'],
-        },
-      ),
+          select: ["id", "firstName", "lastName", "email", "password"],
+        }
+      )
     ).pipe(
       switchMap((user: User) => {
         return from(bcrypt.compare(password, user.password)).pipe(
@@ -62,9 +62,9 @@ export class AuthService {
               delete user.password;
               return user;
             }
-          }),
+          })
         );
-      }),
+      })
     );
   }
 
@@ -76,7 +76,7 @@ export class AuthService {
           // create JWT - credentials
           return from(this.jwtService.signAsync({ user }));
         }
-      }),
+      })
     );
   }
 }
