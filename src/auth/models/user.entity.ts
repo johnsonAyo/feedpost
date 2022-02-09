@@ -1,4 +1,4 @@
-import { FeedPostEntity } from 'src/feed/models/post.entity';
+import { FeedPostEntity } from '../../feed/models/post.entity';
 import { Entity, OneToMany, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('user')
