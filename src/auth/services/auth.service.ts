@@ -1,18 +1,20 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import * as bcrypt from 'bcrypt';
 import { from, Observable } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
-
+import { map, switchMap } from 'rxjs/operators';
+import { Repository } from 'typeorm';
 import { UserEntity } from '../models/user.entity';
 import { User } from '../models/user.interface';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    private jwtService: JwtService,
   ) {}
   hashPassword(password: string): Observable<string> {
     return from(bcrypt.hash(password, 12));
@@ -40,6 +42,40 @@ export class AuthService {
             );
           }),
         );
+      }),
+    );
+  }
+
+  validateUser(email: string, password: string): Observable<User> {
+    return from(
+      this.userRepository.findOne(
+        { email },
+        {
+          select: ['id', 'firstName', 'lastName', 'email', 'password'],
+        },
+      ),
+    ).pipe(
+      switchMap((user: User) => {
+        return from(bcrypt.compare(password, user.password)).pipe(
+          map((isValidPassword: boolean) => {
+            if (isValidPassword) {
+              delete user.password;
+              return user;
+            }
+          }),
+        );
+      }),
+    );
+  }
+
+  login(user: User): Observable<string> {
+    const { email, password } = user;
+    return this.validateUser(email, password).pipe(
+      switchMap((user: User) => {
+        if (user) {
+          // create JWT - credentials
+          return from(this.jwtService.signAsync({ user }));
+        }
       }),
     );
   }

@@ -17,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
-      synchronize: true, // shouldn't be used in production - may lose data
+      synchronize: true,
     }),
     FeedModule,
     AuthModule,
