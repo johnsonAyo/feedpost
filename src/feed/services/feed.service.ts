@@ -11,7 +11,12 @@ export class FeedService {
     @InjectRepository(FeedPostEntity)
     private readonly feedPostRepository: Repository<FeedPostEntity>,
   ) {}
+
   createPost(feedPost: FeedPost): Observable<FeedPost> {
     return from(this.feedPostRepository.save(feedPost));
+  }
+
+  findAllPosts(): Observable<FeedPost[]> {
+    return from(this.feedPostRepository.find());
   }
 }
