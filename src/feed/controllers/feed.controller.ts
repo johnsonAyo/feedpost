@@ -1,11 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Param, Controller, Get, Post, Put } from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { UpdateResult } from 'typeorm';
 import { FeedPost } from '../models/post.interface';
 import { FeedService } from '../services/feed.service';
 
 @Controller('feed')
 export class FeedController {
   constructor(private feedService: FeedService) {}
+
   @Post()
   create(@Body() feedPost: FeedPost): Observable<FeedPost> {
     return this.feedService.createPost(feedPost);
@@ -13,5 +15,13 @@ export class FeedController {
   @Get()
   findAll(): Observable<FeedPost[]> {
     return this.feedService.findAllPosts();
+  }
+
+  @Put(':id')
+  update(
+    @Param('id') id: number,
+    @Body() feedPost: FeedPost,
+  ): Observable<UpdateResult> {
+    return this.feedService.updatePost(id, feedPost);
   }
 }
