@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -7,7 +7,7 @@ import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../models/user.entity';
-import { User } from '../models/user.interface';
+import { User } from '../models/user.class';
 
 @Injectable()
 export class AuthService {
@@ -56,6 +56,12 @@ export class AuthService {
       ),
     ).pipe(
       switchMap((user: User) => {
+        if (!user) {
+          throw new HttpException(
+            { status: HttpStatus.FORBIDDEN, error: 'Invalid Credentials' },
+            HttpStatus.FORBIDDEN,
+          );
+        }
         return from(bcrypt.compare(password, user.password)).pipe(
           map((isValidPassword: boolean) => {
             if (isValidPassword) {
