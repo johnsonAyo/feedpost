@@ -8,6 +8,8 @@ import {
   Request,
   Delete,
   UseGuards,
+  HttpException,
+  HttpStatus,
 } from "@nestjs/common";
 import { JwtGuard } from "../../auth/guards/jwt.guard";
 import { Observable } from "rxjs";
@@ -28,6 +30,15 @@ export class FeedController {
   findAll(): Observable<FeedPost[]> {
     return this.feedService.findAllPosts();
   }
+
+  @UseGuards(JwtGuard)
+  @Get(':id')
+  findPostById(@Param('id') postStringId: string): Observable<FeedPost> {
+    const id = parseInt(postStringId);
+    return this.feedService.findPostById(id);
+  }
+
+
 
   @Put(":id")
   update(
