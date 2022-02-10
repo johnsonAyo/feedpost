@@ -19,7 +19,12 @@ export class FeedService {
   }
 
   findAllPosts(): Observable<FeedPost[]> {
-    return from(this.feedPostRepository.find());
+    if (!FeedPost) {
+      throw new HttpException(
+        'There is currently No post in the feed',
+        HttpStatus.NOT_FOUND,
+      );
+    } else return from(this.feedPostRepository.find());
   }
 
   findPostById(id: number): Observable<User> {

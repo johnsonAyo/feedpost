@@ -28,6 +28,12 @@ export class UserService {
   }
 
   findAllUsers(): Observable<User[]> {
+    if (!User) {
+      throw new HttpException(
+        'There is currently No User in the platform, but then we would never get to this point, right??',
+        HttpStatus.NOT_FOUND,
+      );
+    }
     return from(this.userRepository.find());
   }
 }

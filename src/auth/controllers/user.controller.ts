@@ -4,6 +4,7 @@ import {
   ApiForbiddenResponse,
   ApiFoundResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -20,7 +21,7 @@ export class UserController {
   @UseGuards(JwtGuard)
   @ApiBearerAuth('JWT-auth')
   @Get(':userId')
-  @ApiFoundResponse({ description: 'the resource was successfully Returned' })
+  @ApiOkResponse({ description: 'the resource was successfully Returned' })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized, Input the access Token',
   })
@@ -34,7 +35,7 @@ export class UserController {
   @UseGuards(JwtGuard)
   @ApiBearerAuth('JWT-auth')
   @Get()
-  @ApiFoundResponse({ description: 'the resource was successfully Created' })
+  @ApiOkResponse({ description: 'the resource was successfully Returned' })
   @ApiNotFoundResponse({ description: 'the resource was not Found' })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized, Input the access Token',

@@ -4,9 +4,8 @@ import { Observable } from 'rxjs';
 import { Login, User } from '../models/user.class';
 import { AuthService } from '../services/auth.service';
 import {
+  ApiBadRequestResponse,
   ApiCreatedResponse,
-  ApiForbiddenResponse,
-  ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -17,13 +16,13 @@ export class AuthController {
 
   @Post('register')
   @ApiCreatedResponse({ description: 'Registered Successfully' })
-  @ApiForbiddenResponse({ description: 'Bad Request' })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
   register(@Body() user: User): Observable<User> {
     return this.authService.registerAccount(user);
   }
   @Post('login')
-  @ApiOkResponse({ description: 'logged in  Successfully' })
-  @ApiForbiddenResponse({ description: 'Bad Request' })
+  @ApiCreatedResponse({ description: 'logged in  Successfully' })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
   login(@Body() user: Login): Observable<{ token: string }> {
     return this.authService
       .login(user)

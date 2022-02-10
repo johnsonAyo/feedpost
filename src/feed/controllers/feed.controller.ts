@@ -41,7 +41,7 @@ export class FeedController {
 
   @Get()
   @ApiBearerAuth('JWT-auth')
-  @ApiFoundResponse({ description: 'the resource was successfully Created' })
+  @ApiOkResponse({ description: 'the resource was successfully Returned' })
   @ApiNotFoundResponse({ description: 'the resource was not Found' })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized, Input the access Token',
