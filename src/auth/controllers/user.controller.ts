@@ -2,7 +2,6 @@ import { UseGuards, Get, Param, Controller } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiForbiddenResponse,
-  ApiFoundResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
