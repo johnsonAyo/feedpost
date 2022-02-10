@@ -10,7 +10,7 @@ import { FeedService } from '../services/feed.service';
 import { UserService } from '../../auth/services/user.services';
 import { JwtGuard } from '../../auth/guards/jwt.guard';
 import { User } from '../../auth/models/user.class';
-import { FeedPost } from '../models/post.interface';
+import { FeedPost } from '../models/post.class';
 
 describe('FeedController', () => {
   let feedController: FeedController;

@@ -4,7 +4,7 @@ import { from, Observable, map } from 'rxjs';
 import { User } from 'src/auth/models/user.class';
 import { Repository, UpdateResult, DeleteResult } from 'typeorm';
 import { FeedPostEntity } from '../models/post.entity';
-import { FeedPost } from '../models/post.interface';
+import { FeedPost } from '../models/post.class';
 
 @Injectable()
 export class FeedService {

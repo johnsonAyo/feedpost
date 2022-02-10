@@ -22,7 +22,6 @@ export class AuthService {
 
   registerAccount(user: User): Observable<User> {
     const { firstName, lastName, email, password } = user;
-
     return this.hashPassword(password).pipe(
       switchMap(() => {
         return this.hashPassword(password).pipe(
